@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.1)
 project(cascaron)
 
 
+
 #Librerias externas
 FIND_PACKAGE(OpenCV REQUIRED)
 INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
