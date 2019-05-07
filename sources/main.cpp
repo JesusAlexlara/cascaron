@@ -9,7 +9,7 @@ void devices();
 
 int main( int argc, char** argv )
 {
-    //platforms();
+    platforms();
     devices();
     return EXIT_SUCCESS;
 }
@@ -43,36 +43,42 @@ void devices() {
             clGetDeviceInfo(devices[j], CL_DEVICE_NAME, 0, nullptr, &valueSize);
             value = (char*) malloc(valueSize);
             clGetDeviceInfo(devices[j], CL_DEVICE_NAME, valueSize, value, nullptr);
-            printf("%d. Dispositivo: %s\n", j+1, value);
+            //printf("%d. Dispositivo: %s\n", i+1, value);
+            cout << i+1 << ". Dispositivo: " << value << endl;
             free(value);
 
             // Imprime la version del hardware dispositivo
             clGetDeviceInfo(devices[j], CL_DEVICE_VERSION, 0, nullptr, &valueSize);
             value = (char*) malloc(valueSize);
             clGetDeviceInfo(devices[j], CL_DEVICE_VERSION, valueSize, value, nullptr);
-            printf(" %d.%d Versión del Hardware: %s\n", j+1, 1, value);
+            //printf(" %d.%d Versión del Hardware: %s\n", j+1, 1, value);
+            cout << j+1 << "." << 1 << " Versión del Hardware: " << value << endl;
             free(value);
 
             // Imprime la versión del driver
             clGetDeviceInfo(devices[j], CL_DRIVER_VERSION, 0, nullptr, &valueSize);
             value = (char*) malloc(valueSize);
             clGetDeviceInfo(devices[j], CL_DRIVER_VERSION, valueSize, value, nullptr);
-            printf(" %d.%d Versión del driver: %s\n", j+1, 2, value);
+            //printf(" %d.%d Versión del driver: %s\n", j+1, 2, value);
+            cout << j+1 << "." << 2 << " Versión del driver: " << value << endl;
             free(value);
 
             // Imprime la version del OpenCL
             clGetDeviceInfo(devices[j], CL_DEVICE_OPENCL_C_VERSION, 0, nullptr, &valueSize);
             value = (char*) malloc(valueSize);
             clGetDeviceInfo(devices[j], CL_DEVICE_OPENCL_C_VERSION, valueSize, value, nullptr);
-            printf(" %d.%d versión de OpenCL C : %s\n", j+1, 3, value);
+            //printf(" %d.%d versión de OpenCL C : %s\n", j+1, 3, value);
+            cout << j+1 << "." << 3 << " versión de OpenCL C: " << value << endl;
             free(value);
 
             // Imprime las unidades de procesamiento en paralelo disponibles.
             clGetDeviceInfo(devices[j], CL_DEVICE_MAX_COMPUTE_UNITS,
                     sizeof(maxComputeUnits), &maxComputeUnits, nullptr);
-            printf(" %d.%d Parallel compute units: %d\n", j+1, 4, maxComputeUnits);
+            //printf(" %d.%d Unidades paralelas de procesamiento: %d\n", j+1, 4, maxComputeUnits);
+            cout << j+1 << "." << 4 << " Unidades paralelas de procesamiento: " << maxComputeUnits << endl;
 
         }
+        cout << endl;
         free(devices);
         }
     free(platforms);
