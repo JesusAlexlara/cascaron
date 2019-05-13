@@ -3,29 +3,13 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
 
+#include "oclFiltro.hpp"
+
 using namespace std;
 using namespace cv;
 
 int main( int argc, char** argv )
 {
-    VideoCapture cap(0);
-
-    Mat edges;
-    namedWindow("edges",1);
-
-    if(!cap.isOpened())
-        return EXIT_FAILURE;
-
-    for (;;) {
-        Mat frame;
-
-        cap >> frame;
-        cvtColor(frame, edges, COLOR_BGR2GRAY);
-        GaussianBlur(edges, edges, Size(15, 15), 2, 2);
-        Canny(edges, edges, 0, 30, 3);
-        imshow("edges", edges);
-        if(waitKey(30) >= 0) break;
-    }
     return EXIT_SUCCESS;
 }
 
