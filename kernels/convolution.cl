@@ -1,9 +1,5 @@
 __kernel void filtro(
-__global uchar* data, __global uchar* data2){
-    float kernelMatrix[] = {
-        1, -2, 1,
-        2, -4, 2,
-        1, -2, 1};
+__global uchar* data, __global uchar* data2, __global float* filter){
     uint kernelWidth = 3;
     uint kernelHeight = 3, width = 640, height = 480;
     uint x = get_global_id(0);
@@ -27,7 +23,7 @@ __global uchar* data, __global uchar* data2){
                     (pixelPosY >= height)) continue;
 
                 uchar r = data[pixelPosX + pixelPosY * width];
-                float kernelVal = kernelMatrix[i + j * kernelWidth];
+                float kernelVal = filter[i + j * kernelWidth];
                 rSum += r * kernelVal;
 
                 kSum += kernelVal;

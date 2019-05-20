@@ -90,6 +90,14 @@ oclFiltro::oclFiltro(cl_uint gpu = 1, int width = 640, int height = 480) {
             &errNum);
     checkErr(errNum, "clCreateBuffer(inputSignal)");
 
+    inputSignalFilter = clCreateBuffer(
+                context,
+                CL_MEM_READ_ONLY,
+                sizeof(float) * 9,
+                NULL,
+                &errNum);
+    checkErr(errNum, "clCreateFilter(inputSignal)");
+
     outputSignalBuffer = clCreateBuffer(
             context,
             CL_MEM_WRITE_ONLY,
@@ -99,15 +107,20 @@ oclFiltro::oclFiltro(cl_uint gpu = 1, int width = 640, int height = 480) {
     checkErr(errNum, "clCreateBuffer(outputSignal)");
 }
 
-void oclFiltro::compute(uchar *inputData, uchar *data2)
+void oclFiltro::compute(uchar *inputData, uchar *data2, float *filter)
 {
     global_size = global;
     errNum = clEnqueueWriteBuffer(queue, inputSignalBuffer,CL_TRUE, 0,
                                   sizeof(uchar) * global, inputData, 0, NULL, NULL);
     checkErr(errNum, "clCreateBuffer(inputSignal)");
 
+    errNum = clEnqueueWriteBuffer(queue, inputSignalFilter,CL_TRUE, 0,
+                                  sizeof(float) * 9, filter, 0, NULL, NULL);
+    checkErr(errNum, "clCreateBuffer(inputSignal)");
+
     errNum = clSetKernelArg(kernel, 0, sizeof(cl_mem), &inputSignalBuffer);
     errNum |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &outputSignalBuffer);
+    errNum |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &inputSignalFilter);
     checkErr(errNum, "clSetKernelArg");
 
     errNum = clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &global_size, NULL, 0, NULL, NULL);

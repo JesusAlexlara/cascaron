@@ -18,7 +18,7 @@ public:
     oclFiltro(cl_uint gpu, int width, int height);
     ~oclFiltro();
 
-    void compute(uchar *inputData, uchar *data2);
+    void compute(uchar *inputData, uchar *data2, float *filter);
 
 private:
     int global;
@@ -34,6 +34,7 @@ private:
     cl_kernel kernel;
     cl_mem inputSignalBuffer;
     cl_mem outputSignalBuffer;
+    cl_mem inputSignalFilter;
 
     inline void checkErr(cl_int err, const char* name);
 };
